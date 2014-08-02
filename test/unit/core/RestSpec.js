@@ -1,15 +1,15 @@
 describe('Rest', function(){
-  // var SERVER_URL = 'http://jobquerystagingserver.azurewebsites.net';
-  var SERVER_URL = 'http://localhost:9000';
   beforeEach(module('jobQuery'));
 
   describe('AuthHttpInterceptor', function(){
     var localStorageService,
         User,
-        $httpBackend;
+        $httpBackend,
+        SERVER_URL;
 
     beforeEach(inject(function($injector){
       User = $injector.get('User');
+      SERVER_URL = $injector.get('SERVER_URL');
       localStorageService = $injector.get('localStorageService');
       $httpBackend = $injector.get('$httpBackend');
     }));
@@ -37,11 +37,12 @@ describe('Rest', function(){
   });
 
   describe('User', function(){
-    var User, $httpBackend;
+    var User, $httpBackend, SERVER_URL;
 
     beforeEach(inject(function($injector){
 
       User = $injector.get('User');
+      SERVER_URL = $injector.get('SERVER_URL');
       $httpBackend = $injector.get('$httpBackend');
 
     }));
@@ -100,10 +101,11 @@ describe('Rest', function(){
   });
 
   describe('Message', function(){
-    var Message, $httpBackend;
+    var Message, $httpBackend, SERVER_URL;
 
     beforeEach(inject(function($injector){
       Message = $injector.get('Message');
+      SERVER_URL = $injector.get('SERVER_URL');
       $httpBackend = $injector.get('$httpBackend');
     }));
 
@@ -139,11 +141,12 @@ describe('Rest', function(){
   });
 
   describe('Tag', function(){
-    var Tag, $httpBackend;
+    var Tag, $httpBackend, SERVER_URL;
 
     beforeEach(inject(function($injector){
       Tag = $injector.get('Tag');
       $httpBackend = $injector.get('$httpBackend');
+      SERVER_URL = $injector.get('SERVER_URL');
     }));
 
     it('should exist', function(){
@@ -194,10 +197,11 @@ describe('Rest', function(){
   });
 
   describe('Company', function(){
-    var Company, $httpBackend;
+    var Company, $httpBackend, SERVER_URL;
 
     beforeEach(inject(function($injector){
       Company = $injector.get('Company');
+      SERVER_URL = $injector.get('SERVER_URL');
       $httpBackend = $injector.get('$httpBackend');
     }));
 
@@ -249,10 +253,11 @@ describe('Rest', function(){
   });
 
   describe('Opportunity', function(){
-    var Opportunity, $httpBackend;
+    var Opportunity, $httpBackend, SERVER_URL;
 
     beforeEach(inject(function($injector){
       Opportunity = $injector.get('Opportunity');
+      SERVER_URL = $injector.get('SERVER_URL');
       $httpBackend = $injector.get('$httpBackend');
     }));
 

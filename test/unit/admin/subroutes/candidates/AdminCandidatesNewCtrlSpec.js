@@ -1,7 +1,6 @@
 describe('AdminCandidatesNewCtrl', function(){
-  // var SERVER_URL = 'http://jobquerystagingserver.azurewebsites.net';
-  var SERVER_URL = 'http://localhost:9000';
   var User,
+      SERVER_URL,
       $rootScope,
       $controller,
       $httpBackend;
@@ -14,6 +13,7 @@ describe('AdminCandidatesNewCtrl', function(){
     $controller  = $injector.get('$controller');
     $httpBackend = $injector.get('$httpBackend');
     User         = $injector.get('User');
+    SERVER_URL   = $injector.get('SERVER_URL');
 
     $scope     = $rootScope.$new();
 

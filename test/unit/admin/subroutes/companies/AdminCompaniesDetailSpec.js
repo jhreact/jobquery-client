@@ -1,7 +1,5 @@
 describe('AdminCompaniesDetailCtrl', function(){
-  // var SERVER_URL = 'http://jobquerystagingserver.azurewebsites.net';
-  var SERVER_URL = 'http://localhost:9000';
-  var $httpBackend, scope;
+  var $httpBackend, scope, SERVER_URL;
 
   beforeEach(module('jobQuery'));
 
@@ -10,6 +8,7 @@ describe('AdminCompaniesDetailCtrl', function(){
     var $rootScope = $injector.get('$rootScope');
     var $controller = $injector.get('$controller');
     var Company = $injector.get('Company');
+    SERVER_URL = $injector.get('SERVER_URL');
     $httpBackend = $injector.get('$httpBackend');
     scope = $rootScope.$new();
 
