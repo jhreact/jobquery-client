@@ -1,5 +1,4 @@
 app.controller('AdminFeedCtrl', ['$scope', '$controller', 'Feed',  function ($scope, $controller, Feed) {
-  // console.log("Attempting to invoke Feed.getAll()");
   Feed.getAll().then(function(feedItems) {
     var targetType;
     var targetMap = {
@@ -10,7 +9,6 @@ app.controller('AdminFeedCtrl', ['$scope', '$controller', 'Feed',  function ($sc
       'Tag': '/admin/tags',
       'User': '/admin/candidates/'
     };
-
     $scope.pluralMap = {
       "updated a category": {before: "updated", after: "categories"},
       "created a category": {before: "created", after: "categories"},
@@ -22,26 +20,37 @@ app.controller('AdminFeedCtrl', ['$scope', '$controller', 'Feed',  function ($sc
       "updated an opportunity": {before: "updated", after: "opportunities"},
       "updated a match": {before: "updated", after: "matches"}
     };
-
-    for (var day in feedItems) {
-      for (var user in feedItems[day]['items']) {
-        for (var action in feedItems[day]['items'][user]) {
-          for (var detail in feedItems[day]['items'][user][action]) {
-            feedItems[day]['items'][user][action][detail]['userLink'] = '/admin/candidates/' + feedItems[day]['items'][user][action][detail]['userid'];
-            targetType = feedItems[day]['items'][user][action][detail]['targetType'];
-            if (targetType === 'Tag') {
-              feedItems[day]['items'][user][action][detail]['targetLink'] = targetMap[targetType];
-            } else if (targetType === 'Match') {
-              // TODO: If no direct link, skip and let template handle it
-              // feedItems[day]['items'][user][action][detail]['targetLink'] = targetMap['Opportunity'] + feedItems[day]['items'][user][action][detail]['actionObjectTarget'];
-            } else {
-              feedItems[day]['items'][user][action][detail]['targetLink'] = targetMap[targetType] + feedItems[day]['items'][user][action][detail]['target'];
-            }
+    var feedRows = [];
+    var day;
+    var row = {};
+    for (var i=0; i < feedItems.length; i++){
+      day = feedItems[i]['dateid'];
+      console.log(day);
+      row[day] = row[day] || {dateid: day, date: feedItems[i]['date'], items: []};
+      for (var j=0; j < feedItems[i]['items'].length; j++) {
+        feedRow = feedItems[i]['items'][j];
+        feedRow.userLink = '/admin/candidates/' + feedRow.userid;
+        if (feedRow.targetType === 'Tag') {
+          feedRow.targetLink = targetMap[feedRow.targetType];
+        } else if (feedRow.targetType === 'Match') {
+          if (feedRow.actionObject) {
+            feedRow.targetLink = targetMap['Opportunity'] + feedRow.actionObject;
+          } else {
+            feedRow.targetLink = targetMap['Opportunity'] + feedRow.target;
           }
+        } else {
+          feedRow.targetLink = targetMap[feedRow.targetType] + feedRow.target;
         }
+        row[day]['items'].push(feedRow);
+        // console.log(feedRows[day]);
       }
     }
-    $scope.feeditemdetails = feedItems;
+    var days = Object.keys(row).sort().reverse();
+    for (var k=0; k < days.length; k++) {
+      feedRows.push(row[days[k]]);
+    }
+    // console.log(feedRows);
+    $scope.feeditemdetails = feedRows;
   });
 
 }]);
