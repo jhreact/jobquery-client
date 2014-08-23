@@ -144,8 +144,12 @@ app.controller('UsersDashboardCtrl',
     });
 
     $scope.match.userInterest = value;
+    // TODO: Refactor into service
     $scope.match.uid = $rootScope.uid;
-    $scope.match.targetDisplayName = $scope.match.opportunity.company.name + ' - ' + $scope.match.opportunity.jobTitle;
+    $scope.match.actionObject = $scope.match.opportunity._id;
+    $scope.match.actionObjectType = 'Opportunity';
+    $scope.match.actionObjectDisplayName = $scope.match.opportunity.company.name + ' - ' + $scope.match.opportunity.jobTitle;
+    $scope.match.targetDisplayName = $scope.match.actionObjectDisplayName;
     UsersOpportunity.update($scope.match).then(function () { });
 
   };
@@ -161,7 +165,10 @@ app.controller('UsersDashboardCtrl',
     $scope.default = true;
     $scope.isVideo = false;
     $scope.match.uid = $rootScope.uid;
-    $scope.match.targetDisplayName = $scope.match.opportunity.company.name + ' - ' + $scope.match.opportunity.jobTitle;
+    $scope.match.actionObject = $scope.match.opportunity._id;
+    $scope.match.actionObjectType = 'Opportunity';
+    $scope.match.actionObjectDisplayName = $scope.match.opportunity.company.name + ' - ' + $scope.match.opportunity.jobTitle;
+    $scope.match.targetDisplayName = $scope.match.actionObjectDisplayName;
     UsersOpportunity.update($scope.match).then(function(){
       $scope.submitText = 'Fetching Next';
       $scope.matches.splice(0, 1);
